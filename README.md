@@ -1,8 +1,9 @@
 # ES6 Features used in this project
 
 - Template Literals/Strings
-- Object Shorthand notation
+- Object Shorthand notation (Enhanced object Literals)
 - Object Destructuring
+- Block Scope & Function Scope
 
 ## Javascript concepts learnt
 - Truthy & Falsy values
