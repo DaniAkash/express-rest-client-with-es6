@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const students = require("./models/Students");
 const studentsRouter = require("./routers/studentsRouter");
+const studentRouter = require("./routers/studentRouter");
 
 const app = express();
 
@@ -19,15 +19,7 @@ app.get("/", (req, res) => {
 
 app.use("/students", studentsRouter);
 
-app.get("/student/:id", (req, res) => {
-  // const studentId = req.params.id;
-  const { id = "" } = req.params;
-  const requiredStudent = students.find(student => {
-    if (parseInt(id) === student.id) return true;
-    else return false;
-  });
-  res.status(200).json({ student: requiredStudent });
-});
+app.use("/student", studentRouter)
 
 const server = app.listen(8080, () => {
   console.log(`Server running in port ${server.address().port}`);
