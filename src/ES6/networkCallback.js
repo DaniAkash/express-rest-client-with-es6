@@ -8,6 +8,7 @@ var options = {
   maxRedirects: 20
 };
 
+
 const networkRequest = (
   successCallback = () => null,
   failureCallback = () => null
