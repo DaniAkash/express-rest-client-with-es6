@@ -5,6 +5,7 @@ const path = require("path");
 const studentsRouter = require("./routers/studentsRouter");
 const studentRouter = require("./routers/studentRouter");
 const students = require("./models/Students");
+const formatIndex = require("./views/helpers/formatIndex");
 
 const app = express();
 
@@ -14,7 +15,10 @@ const app = express();
 const hbs = expressHbs.create({
   extname: ".hbs",
   layoutsDir: path.join(__dirname, "./views/layouts"),
-  partialsDir: path.join(__dirname, "./views/partials")
+  partialsDir: path.join(__dirname, "./views/partials"),
+  helpers: {
+    formatIndex
+  }
 });
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");

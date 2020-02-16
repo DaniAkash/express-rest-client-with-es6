@@ -15,7 +15,7 @@
     <tbody>
       {{#each students}}
       <tr>
-        <th scope="row">{{@index}}</th>
+        <th scope="row">{{formatIndex @index}}</th>
         <td>{{this.firstName}}</td>
         <td>{{this.lastName}}</td>
         <td>{{this.age}}</td>
