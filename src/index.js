@@ -4,6 +4,7 @@ const expressHbs = require("express-handlebars");
 const path = require("path");
 const studentsRouter = require("./routers/studentsRouter");
 const studentRouter = require("./routers/studentRouter");
+const students = require("./models/Students");
 
 const app = express();
 
@@ -42,7 +43,8 @@ app.get("/", (req, res) => {
 app.get("/web/students", (req, res) => {
   res.render("students", {
     layout: "navigation",
-    pageTitle: "Students"
+    pageTitle: "Students",
+    students
   });
 });
 
