@@ -28,8 +28,8 @@ const getAnIceCream = () => {
     } else {
       reject("I Didn't get the ice cream!");
     }
-  })
-}
+  });
+};
 
 cleanRoom()
   .then(success => {
@@ -46,3 +46,17 @@ cleanRoom()
   .catch(error => {
     console.error(error);
   });
+
+const myAsyncFunction = async () => {
+  try {
+    const isCleaningSuccess = await cleanRoom();
+    console.log(isCleaningSuccess);
+    if(isCleaningSuccess) {
+      const isWalkComplete = await goForAWalk();
+      console.log(isWalkComplete);
+    }
+  } catch(e) {
+    console.error(e);
+  }
+};
+myAsyncFunction();
