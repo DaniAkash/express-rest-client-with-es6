@@ -34,7 +34,15 @@ app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.render("home", {
-    layout: "hero"
+    layout: "hero",
+    pageTitle: "Home",
+  });
+});
+
+app.get("/web/students", (req, res) => {
+  res.render("students", {
+    layout: "navigation",
+    pageTitle: "Students"
   });
 });
 
