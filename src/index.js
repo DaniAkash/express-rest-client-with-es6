@@ -52,6 +52,13 @@ app.get("/web/students", (req, res) => {
   });
 });
 
+app.get("/web/add-student", (req, res) => {
+  res.render("addStudent", {
+    layout: "navigation",
+    pageTitle: "Add New Student",
+  })
+})
+
 app.use("/students", studentsRouter);
 
 app.use("/student", studentRouter)
