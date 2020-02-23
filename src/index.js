@@ -63,6 +63,25 @@ app.get("/web/add-student", (req, res) => {
   });
 });
 
+app.get("/web/edit-student/:id", (req, res) => {
+  const { id = "" } = req.params;
+  const requiredStudent = students.find(student => {
+    if (parseInt(id) === student.id) return true;
+    else return false;
+  });
+  if (requiredStudent) {
+    res.render("addStudent", {
+      layout: "navigation",
+      pageTitle: "Add New Student",
+      studentID: requiredStudent.id,
+      mode: "edit",
+      student: requiredStudent
+    });
+  } else {
+    res.status(404).send("Not Found");
+  }
+});
+
 app.use("/students", studentsRouter);
 
 app.use("/student", studentRouter);

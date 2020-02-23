@@ -1,20 +1,22 @@
 <form action="/student" id="add-student-form" method="POST" target="_blank">
   <input type="hidden" name="id" value="{{studentID}}" />
   <label for="fname">First name:</label>
-  <input type="text" id="fname" name="firstName" placeholder="First Name" required />
+  <input type="text" id="fname" name="firstName" placeholder="First Name" value="{{student.firstName}}" required />
   <br />
   <label for="lname">Last name:</label>
-  <input type="text" id="lname" name="lastName" placeholder="Last Name" required />
+  <input type="text" id="lname" name="lastName" placeholder="Last Name" value="{{student.lastName}}" required />
   <br />
   <label for="age">Age:</label>
-  <input type="text" id="age" name="age" placeholder="Age" required />
+  <input type="text" id="age" name="age" placeholder="Age" value="{{student.age}}" required />
   <br />
   <label for="gender">Gender:</label>
-  <input type="radio" id="gender-male" name="gender" value="male" required />
+  <input type="radio" id="gender-male" name="gender" value="male"
+    checked="{{#if (ifEquality student.gender "male")}}true{{/if}}" required />
   <label for="gender-male">Male</label>
-  <input type="radio" id="gender-female" name="gender" value="female" required />
+  <input type="radio" id="gender-female" name="gender" value="female"
+    {{#if (ifEquality student.gender "female")}}true{{/if}} required />
   <label for="gender-female">Female</label><br />
-  <input type="submit" value="Add Student" />
+  <input type="submit" value="{{#if (ifEquality mode "edit")}}Save{{else}}Add Student{{/if}}" />
 </form>
 <script>
   const $addStudentForm = document.querySelector("#add-student-form");
@@ -29,28 +31,40 @@
       formDetailsJson[key] = value;
     }
 
-    const config = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formDetailsJson) // body data type must match "Content-Type" header
-    };
+    {{#if (ifEquality mode "edit")}}
+  const url = "/student/{{studentID}}";
+  const config = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formDetailsJson) // body data type must match "Content-Type" header
+  };
+  {{else}}
+  const url = "/student";
+  const config = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formDetailsJson) // body data type must match "Content-Type" header
+  };
+  {{/if}}
 
-    fetch("/student", config)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw Error("Request Failed");
-        }
-      })
-      .then(data => {
-        alert(data.message);
-      })
-      .catch(() => {
-        alert("Something went wrong!");
-      });
+      fetch(url, config)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw Error("Request Failed");
+          }
+        })
+        .then(data => {
+          alert(data.message);
+        })
+        .catch(() => {
+          alert("Something went wrong!");
+        });
 
-  });
+    });
 </script>
