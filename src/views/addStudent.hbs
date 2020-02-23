@@ -31,40 +31,41 @@
       formDetailsJson[key] = value;
     }
 
-    {{#if (ifEquality mode "edit")}}
-  const url = "/student/{{studentID}}";
-  const config = {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formDetailsJson) // body data type must match "Content-Type" header
-  };
-  {{else}}
-  const url = "/student";
-  const config = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formDetailsJson) // body data type must match "Content-Type" header
-  };
-  {{/if}}
+    let url, config;
+    if ("{{mode}}" === "edit") {
+      url = "/student/{{studentID}}";
+      config = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDetailsJson) // body data type must match "Content-Type" header
+      };
+    } else {
+      url = "/student";
+      config = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDetailsJson) // body data type must match "Content-Type" header
+      };
+    }
 
-      fetch(url, config)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw Error("Request Failed");
-          }
-        })
-        .then(data => {
-          alert(data.message);
-        })
-        .catch(() => {
-          alert("Something went wrong!");
-        });
+    fetch(url, config)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw Error("Request Failed");
+        }
+      })
+      .then(data => {
+        alert(data.message);
+      })
+      .catch(() => {
+        alert("Something went wrong!");
+      });
 
-    });
+  });
 </script>
