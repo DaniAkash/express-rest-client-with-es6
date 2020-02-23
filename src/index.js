@@ -6,6 +6,7 @@ const studentsRouter = require("./routers/studentsRouter");
 const studentRouter = require("./routers/studentRouter");
 const students = require("./models/Students");
 const formatIndex = require("./views/helpers/formatIndex");
+const ifEquality = require("./views/helpers/ifEquality");
 
 const app = express();
 
@@ -17,7 +18,8 @@ const hbs = expressHbs.create({
   layoutsDir: path.join(__dirname, "./views/layouts"),
   partialsDir: path.join(__dirname, "./views/partials"),
   helpers: {
-    formatIndex
+    formatIndex,
+    ifEquality
   }
 });
 app.engine(".hbs", hbs.engine);
@@ -30,6 +32,7 @@ app.set("views", path.join(__dirname, "./views"));
  * request body
  */
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // app.use((req, res, next) => {
 //   // res.send("Response from Middleware");
@@ -40,7 +43,7 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.render("home", {
     layout: "hero",
-    pageTitle: "Home",
+    pageTitle: "Home"
   });
 });
 
@@ -56,12 +59,13 @@ app.get("/web/add-student", (req, res) => {
   res.render("addStudent", {
     layout: "navigation",
     pageTitle: "Add New Student",
-  })
-})
+    studentID: students.length + 1
+  });
+});
 
 app.use("/students", studentsRouter);
 
-app.use("/student", studentRouter)
+app.use("/student", studentRouter);
 
 const server = app.listen(8080, () => {
   console.log(`Server running in port ${server.address().port}`);
