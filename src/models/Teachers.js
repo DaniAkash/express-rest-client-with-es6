@@ -92,11 +92,15 @@ const teacherData = [
   }
 ];
 
-Teacher.sync({ force: true })
-  .then(() => {
-    return Teacher.bulkCreate(teacherData, { returning: true });
-  })
-  .then(result => {
-    console.log(result.forEach(item => console.log(item.get())));
-  })
-  .catch(console.error);
+const teacherSync = () => {
+  Teacher.sync({ force: true })
+    .then(() => {
+      return Teacher.bulkCreate(teacherData, { returning: true });
+    })
+    .then(result => {
+      console.log(result.forEach(item => console.log(item.get())));
+    })
+    .catch(console.error);
+}
+
+module.exports = Teacher;
