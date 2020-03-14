@@ -56,3 +56,5 @@ Student.sync({ force: false })
     console.log(result.get());
   })
   .catch(console.error);
+
+module.exports = Student;
