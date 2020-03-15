@@ -1,6 +1,7 @@
 const express = require("express");
 const Admin = require("../models/Admin");
 const { compareHash } = require("../services/hashingService");
+const { createToken } = require("../services/jwtService");
 
 const adminRouter = express.Router();
 
@@ -18,12 +19,17 @@ adminRouter
         compareHash(password, passwordHash)
           .then(result => {
             if(result) {
-              // Crafting jwt cookie
+              const jwtToken = createToken({
+                sub: "admin",
+                email
+              });
+              console.log(jwtToken);
               res.send("Login Success");
             } else {
               res.send("Invalid User");
             }
           })
+          .catch(console.error);
       }
     })
     .catch(console.error);
