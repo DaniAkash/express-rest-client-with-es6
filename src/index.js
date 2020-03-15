@@ -4,7 +4,7 @@ const expressHbs = require("express-handlebars");
 const path = require("path");
 const studentsRouter = require("./routers/studentsRouter");
 const studentRouter = require("./routers/studentRouter");
-const students = require("./models/Students");
+const webRouter = require("./routers/webRouter");
 const formatIndex = require("./views/helpers/formatIndex");
 const ifEquality = require("./views/helpers/ifEquality");
 
@@ -47,44 +47,11 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/web/students", (req, res) => {
-  res.render("students", {
-    layout: "navigation",
-    pageTitle: "Students",
-    students
-  });
-});
-
-app.get("/web/add-student", (req, res) => {
-  res.render("addStudent", {
-    layout: "navigation",
-    pageTitle: "Add New Student",
-    studentID: students.length + 1
-  });
-});
-
-app.get("/web/edit-student/:id", (req, res) => {
-  const { id = "" } = req.params;
-  const requiredStudent = students.find(student => {
-    if (parseInt(id) === student.id) return true;
-    else return false;
-  });
-  if (requiredStudent) {
-    res.render("addStudent", {
-      layout: "navigation",
-      pageTitle: "Add New Student",
-      studentID: requiredStudent.id,
-      mode: "edit",
-      student: requiredStudent
-    });
-  } else {
-    res.status(404).send("Not Found");
-  }
-});
-
 app.use("/students", studentsRouter);
 
 app.use("/student", studentRouter);
+
+app.use("/web", webRouter);
 
 const server = app.listen(8080, () => {
   console.log(`Server running in port ${server.address().port}`);
