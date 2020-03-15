@@ -23,8 +23,8 @@ adminRouter
                 sub: "admin",
                 email
               });
-              console.log(jwtToken);
-              res.send("Login Success");
+              res.cookie('jwt', jwtToken, { httpOnly: true });
+              res.redirect("/");
             } else {
               res.send("Invalid User");
             }
