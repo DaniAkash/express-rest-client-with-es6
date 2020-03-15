@@ -4,6 +4,7 @@ const expressHbs = require("express-handlebars");
 const path = require("path");
 const studentsRouter = require("./routers/studentsRouter");
 const studentRouter = require("./routers/studentRouter");
+const adminRouter = require("./routers/adminRouter");
 const webRouter = require("./routers/webRouter");
 const formatIndex = require("./views/helpers/formatIndex");
 const ifEquality = require("./views/helpers/ifEquality");
@@ -50,6 +51,8 @@ app.get("/", (req, res) => {
 app.use("/students", studentsRouter);
 
 app.use("/student", studentRouter);
+
+app.use("/admin", adminRouter);
 
 app.use("/web", webRouter);
 

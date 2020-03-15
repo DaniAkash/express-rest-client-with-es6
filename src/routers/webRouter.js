@@ -35,6 +35,15 @@ webRouter
     } else {
       res.status(404).send("Not Found");
     }
+  })
+  .get("/admin/login", (req, res) => {
+    res.render("adminLogin", {
+      layout: "login",
+      pageTitle: "Admin Login",
+      submitTarget: "/admin/login",
+      submitMethod: "POST",
+      formTitle: "Admin Login Page"
+    });
   });
 
 module.exports = webRouter;
