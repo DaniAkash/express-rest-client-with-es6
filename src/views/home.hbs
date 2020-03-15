@@ -9,6 +9,10 @@
   </p>
   <p class="lead">
     <a class="btn btn-primary btn-lg" href="/web/students" role="button">Students</a>
-    <a class="btn btn-primary btn-lg" href="/teachers.html" role="button">Teachers</a>
+    {{#if isLoggedIn}}
+    <a class="btn btn-primary btn-lg" href="/teachers" role="button">Teachers</a>
+    {{else}}
+    <a class="btn btn-primary btn-lg" href="/web/admin/login" role="button">Login</a>
+    {{/if}}
   </p>
 </div>

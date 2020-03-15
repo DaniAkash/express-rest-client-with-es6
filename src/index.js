@@ -5,10 +5,13 @@ const expressHbs = require("express-handlebars");
 const path = require("path");
 const studentsRouter = require("./routers/studentsRouter");
 const studentRouter = require("./routers/studentRouter");
+const teacherRouter = require("./routers/teacherRouter");
 const adminRouter = require("./routers/adminRouter");
 const webRouter = require("./routers/webRouter");
+const adminAuth = require("./middlewares/adminAuth");
 const formatIndex = require("./views/helpers/formatIndex");
 const ifEquality = require("./views/helpers/ifEquality");
+const { validateToken } = require("./services/jwtService");
 
 const app = express();
 
@@ -44,9 +47,11 @@ app.use(cookieParser());
 // });
 
 app.get("/", (req, res) => {
+  const isLoggedIn = validateToken(req.cookies.jwt);
   res.render("home", {
     layout: "hero",
-    pageTitle: "Home"
+    pageTitle: "Home",
+    isLoggedIn: !!isLoggedIn
   });
 });
 
@@ -55,6 +60,8 @@ app.use("/students", studentsRouter);
 app.use("/student", studentRouter);
 
 app.use("/admin", adminRouter);
+
+app.use("/teachers", adminAuth, teacherRouter);
 
 app.use("/web", webRouter);
 
